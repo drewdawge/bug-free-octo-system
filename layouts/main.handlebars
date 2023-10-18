@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Our Platform</h1>
+    </header>
+
+    <main>
+        <img src="{{ imageUrl }}" alt="Welcome Image">
+
+        {{#unless loggedIn}}
+        <div class="login-area">
+            <form action="/login" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                
+                <input type="submit" value="Login">
+            </form>
+        </div>
+        {{else}}
+        {{> storedInfoPartial }}
+        {{/unless}}
+    </main>
+
+    <footer>
+        Copyright © 2023 by Company Name.
+    </footer>
+</body>
+
+</html>
