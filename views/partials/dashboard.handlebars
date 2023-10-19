@@ -1,0 +1,12 @@
+<!-- views/partials/dashboard.handlebars -->
+<h1>Welcome {{user.username}}!</h1>
+<div>
+  <h2>Your transactions:</h2>
+  <ul>
+    {{#each transactions}}
+      <li>{{description}} - {{amount}}</li>
+    {{else}}
+      <li>No transactions found.</li>
+    {{/each}}
+  </ul>
+</div>
