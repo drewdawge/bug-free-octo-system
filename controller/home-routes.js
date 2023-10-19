@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Expense = require('../models');
+const User = require('../models/User');
 
 // need to add Get route for pulling up expense list
 
