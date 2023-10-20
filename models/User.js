@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+const Expense = require('./Expense');
 
 class User extends Model {
   checkPassword(loginPw) {
@@ -24,22 +25,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    amount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   },
   {
     hooks: {
@@ -55,5 +40,10 @@ User.init(
     modelName: 'user',
   }
 );
+
+User.hasMany(Expense, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
 
 module.exports = User;
