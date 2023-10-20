@@ -2,15 +2,13 @@ const router = require('express').Router();
 const User = require('../models/User');
 
 router.get('/', async (req, res) => {
-  res.render('all');
+  if (req.session.loggedIn) {
+    // User is logged in, render content for logged-in users
+    res.render('partials/expenses'); 
+  } else {
+    // User is not logged in, render content for non-logged-in users
+    res.render('partials/login');
+  }
 });
-
-router.get('/login', (req, res) => {
-    if (req.session.loggedIn) {
-      res.redirect('/');
-      return;
-    }
-    res.render('login');
-  });
 
   module.exports = router;
