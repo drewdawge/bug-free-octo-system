@@ -1,5 +1,7 @@
-<section class="stored-info">
-    <h2>Your Stored Information</h2>
+<section class="expenses">
+    <h3>Welcome {{user.username}}!</h3>
+    <h4>Your Stored Information</h4>
+    <div>
     <ul>
         {{#each records}}
         <li>
@@ -8,4 +10,17 @@
         </li>
         {{/each}}
     </ul>
+    </div>
+
+
+    <div>
+  <h4>Your transactions:</h4>
+  <ul>
+    {{#each transactions}}
+      <li>{{description}} - {{amount}}</li>
+    {{else}}
+      <li>No transactions found.</li>
+    {{/each}}
+  </ul>
+</div>
 </section>
