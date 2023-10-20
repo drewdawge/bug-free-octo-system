@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <header>
+    {{!-- <header>
         <h1>Don't Be A Nut, Save Your Nuts.</h1>
-    </header>
+    </header> --}}
 
     <main>
         <img src="{{ imageUrl }}" alt="Welcome Image">
 
-        {{#unless loggedIn}}
+        {{!-- {{#unless loggedIn}}
         <div class="login-area">
             <form action="/login" method="post">
                 <label for="username">Username:</label>
@@ -29,13 +29,13 @@
             </form>
         </div>
         {{else}}
-        {{> storedInfoPartial }}
-        {{/unless}}
+        {{> expenses }}
+        {{/unless}} --}}
     </main>
 
-    <footer>
+    {{!-- <footer>
         Copyright © 2023 by Company Name.
-    </footer>
+    </footer> --}}
 </body>
 
 </html>

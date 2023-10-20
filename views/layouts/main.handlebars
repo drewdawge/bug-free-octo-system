@@ -10,10 +10,19 @@
 
 <body>
     <header>
+        <h2><a href="/">Home</a></h2>
         <h1>Don't Be A Nut, Save Your Nuts.</h1>
+        <h2><a href="/login">login</a></h2>
     </header>
 
-    <main>
+
+
+
+    <main class="container container-fluid mt-5">
+        {{{ body }}}
+      </main>
+
+    {{!-- <main>
         <img src="{{ imageUrl }}" alt="Welcome Image">
 
         {{#unless loggedIn}}
@@ -31,7 +40,7 @@
         {{else}}
         {{> storedInfoPartial }}
         {{/unless}}
-    </main>
+    </main> --}}
 
     <footer>
         Copyright © 2023 by Company Name.

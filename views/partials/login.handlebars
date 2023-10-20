@@ -1,4 +1,39 @@
-<div class="row justify-space-between-md">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <main>
+        <img src="{{ imageUrl }}" alt="Welcome Image">
+
+        {{#unless loggedIn}}
+        <div class="login-area">
+            <form action="/login" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                
+                <input type="submit" value="Login">
+            </form>
+        </div>
+        {{else}}
+        {{> expenses }}
+        {{/unless}}
+    </main>
+  
+</body>
+</html>
+
+
+
+
+{{!-- <div class="row justify-space-between-md">
   <div class="login-card">
     <h2 class="page-title">Login</h2>
     <form class="form login-form">
@@ -37,4 +72,4 @@
   </div>
 </div>
 
-<script src="./js/login.js"></script>
+<script src="./js/login.js"></script> --}}
