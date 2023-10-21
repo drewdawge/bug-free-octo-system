@@ -1,4 +1,30 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+    </head>
+</html>
+<body>
+    <header>
+        <h1>Don't Be A Nut, Save Your Nuts.</h1>
+    </header>
+    <main>
+    {{#if loggedIn}}
+        {{> expenses}}
+    {{else}}
+        {{>login}}
+    {{/if}}
+    </main>
+    <footer>
+        Copyright © 2023 by Company Name.
+    </footer>
+</body>
+</html>
+
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,14 +39,11 @@
         <h2><a href="/">Home</a></h2>
         <h1>Don't Be A Nut, Save Your Nuts.</h1>
         <h2><a href="/">login</a></h2>
-    </header>
+    </header> --}}
 
-
-
-
-    <main class="container container-fluid mt-5">
+    {{!-- <main class="container container-fluid mt-5">
         {{{ body }}}
-      </main>
+      </main> --}}
 
     {{!-- <main>
         <img src="{{ imageUrl }}" alt="Welcome Image">
@@ -41,10 +64,10 @@
         {{> storedInfoPartial }}
         {{/unless}}
     </main> --}}
-
+{{!-- 
     <footer>
         Copyright © 2023 by Company Name.
     </footer>
 </body>
 
-</html>
+</html> --}}

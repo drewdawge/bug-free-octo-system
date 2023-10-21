@@ -1,41 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-
-  <main>
-        <img src="{{ imageUrl }}" alt="Welcome Image">
-
-        {{#unless loggedIn}}
-        <div class="login-area">
-            <form action="/login" method="post">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username">
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
-                
-                <input type="submit" value="Login">
-            </form>
-        </div>
-        {{else}}
-        {{> expenses }}
-        {{/unless}}
-    </main>
-  
-</body>
-</html>
-
-
-
-
-{{!-- <div class="row justify-space-between-md">
+<div class="row justify-space-between-md">
   <div class="login-card">
-    <h2 class="page-title">Login</h2>
+    <h2 class="page-title">Login:</h2>
     <form class="form login-form">
       <div class="form-group">
         <label for="email-login">Email:</label>
@@ -54,10 +19,6 @@
     <h2 class="page-title">Signup</h2>
     <form class="form signup-form">
       <div class="form-group">
-        <label for="username-signup">Username:</label>
-        <input class="form-input" type="text" id="username-signup" />
-      </div>
-      <div class="form-group">
         <label for="email-signup">Email:</label>
         <input class="form-input" type="text" id="email-signup" />
       </div>
@@ -71,5 +32,3 @@
     </form>
   </div>
 </div>
-
-<script src="./js/login.js"></script> --}}

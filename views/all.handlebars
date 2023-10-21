@@ -1,4 +1,31 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+    </head>
+</html>
+<body>
+    <header>
+        <h1>Don't Be A Nut, Save Your Nuts.</h1>
+    </header>
+    <main>
+    {{#if loggedIn}}
+        {{> expenses}}
+    {{else}}
+        {{>login}}
+    {{/if}}
+    </main>
+    <footer>
+        Copyright © 2023 by Company Name.
+    </footer>
+<script src="../public/js/login.js"></script>
+</body>
+</html>
+
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,11 +58,11 @@
         {{else}}
         {{> expenses }}
         {{/unless}} --}}
-    </main>
+    {{!-- </main>
 
     {{!-- <footer>
         Copyright © 2023 by Company Name.
     </footer> --}}
 </body>
 
-</html>
+</html> --}}

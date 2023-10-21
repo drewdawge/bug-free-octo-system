@@ -20,6 +20,7 @@ router.post('/new_user', async (req, res) => {
 
     req.session.save(() => {
       req.session.loggedIn = true;
+      req.session.userId = dbUserData.id;
 
       res.status(200).json(dbUserData);
     });
@@ -32,33 +33,42 @@ router.post('/new_user', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ where: { username } });
+    const { email, password } = req.body;
+    const userData = await User.findOne({ where: { email } });
 
-    if (!user || !user.checkPassword(password)) {
-      res.status(400).json({ error: 'Invalid credentials' });
+    if (!userData) {
+      res.status(400).json({ message: 'Incorrect email or password' });
+      return;
+    }
+    const validPassword = userData.checkPassword(password);
+
+    if (!validPassword) {
+      res.status(400).json({ message: 'Incorrect email or password' });
       return;
     }
 
-    req.session.userId = user.id;
-    req.session.loggedIn = true;
-    res.json({ message: 'Login successful' });
+    req.session.save(() => {
+          req.session.loggedIn = true;
+          req.session.userId = userData.id; // Store user ID in the session if needed
+
+          res.status(200).json({ user: userData, message: 'You are now logged in' });
+        });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal Server Error' });
+      console.log(err);
+      res.status(500).json(err);
   }
 });
 
-// Logout
-router.post('/logout', (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.json({ message: 'Logout successful' });
-    });
-  } else {
-    res.status(404).end();
-  }
-});
+// // Logout
+// router.post('/logout', (req, res) => {
+//   if (req.session.loggedIn) {
+//     req.session.destroy(() => {
+//       res.json({ message: 'Logout successful' });
+//     });
+//   } else {
+//     res.status(404).end();
+//   }
+// });
 
 // Route to fetch expenses
 router.get('/expenses', async (req, res) => {
@@ -74,6 +84,28 @@ router.get('/expenses', async (req, res) => {
   } else {
     res.status(401).json({ error: 'Unauthorized' });
   }
+});
+
+router.post('/addExpense', (req, res) => {
+  const { date, name, type, amount } = req.body;
+  if (!date || !name || !type || !amount) {
+    return res.status(400).json({ error: 'All fields are required' });
+  };
+  Expense.create({
+    date: date,
+    name: name,
+    type: type,
+    amount: amount,
+    user_id: req.session.userId,
+  })
+  .then((newExpense) => {
+    console.log('New expense added: '+ newExpense);
+    res.redirect('/');
+  })
+  .catch((err) => {
+    console.error('Error adding expense:'+ err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  });  
 });
 
 module.exports = router;
