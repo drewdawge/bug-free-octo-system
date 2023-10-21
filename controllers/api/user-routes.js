@@ -86,6 +86,7 @@ router.get('/expenses', async (req, res) => {
   }
 });
 
+// Route to add expense
 router.post('/addExpense', (req, res) => {
   const { date, name, type, amount } = req.body;
   if (!date || !name || !type || !amount) {
@@ -100,7 +101,7 @@ router.post('/addExpense', (req, res) => {
   })
   .then((newExpense) => {
     console.log('New expense added: '+ newExpense);
-    res.redirect('/');
+    res.json({ message: 'Expense added successfully' });
   })
   .catch((err) => {
     console.error('Error adding expense:'+ err);
