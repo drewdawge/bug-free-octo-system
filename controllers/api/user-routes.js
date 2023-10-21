@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
 
     req.session.save(() => {
           req.session.loggedIn = true;
-          req.session.userId = userData.id; // Store user ID in the session if needed
+          req.session.userId = userData.id; 
 
           res.status(200).json({ user: userData, message: 'You are now logged in' });
         });
@@ -76,7 +76,7 @@ router.get('/expenses', async (req, res) => {
     try {
       const userId = req.session.userId;
       const expenses = await Expense.findAll({ where: { userId } });
-      res.json({ expenses });
+      res.status(200).json({ expenses, loggedIn: true });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -87,26 +87,27 @@ router.get('/expenses', async (req, res) => {
 });
 
 // Route to add expense
-router.post('/addExpense', (req, res) => {
+router.post('/addExpense', async (req, res) => {
   const { date, name, type, amount } = req.body;
   if (!date || !name || !type || !amount) {
     return res.status(400).json({ error: 'All fields are required' });
-  };
-  Expense.create({
-    date: date,
-    name: name,
-    type: type,
-    amount: amount,
-    user_id: req.session.userId,
-  })
-  .then((newExpense) => {
-    console.log('New expense added: '+ newExpense);
-    res.json({ message: 'Expense added successfully' });
-  })
-  .catch((err) => {
-    console.error('Error adding expense:'+ err);
+  }
+    try {
+    const newExpense = await Expense.create({
+      date: date,
+      name: name,
+      type: type,
+      amount: amount,
+      userid: req.session.userId,
+    });
+    
+    console.log('New expense added:', newExpense);
+    
+    res.status(201).json(newExpense); 
+  } catch (err) {
+    console.error('Error adding expense:', err);
     res.status(500).json({ error: 'Internal Server Error' });
-  });  
+  }
 });
 
 module.exports = router;

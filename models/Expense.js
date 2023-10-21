@@ -27,7 +27,7 @@ Expense.init(
             type: DataTypes.INTEGER,
             allowNull: false,
           },
-        user_id: {
+        userid: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {

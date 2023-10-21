@@ -42,7 +42,7 @@ User.init(
 );
 
 User.hasMany(Expense, {
-  foreignKey: 'user_id',
+  foreignKey: 'userid',
   onDelete: 'CASCADE',
 });
 

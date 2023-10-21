@@ -1,15 +1,14 @@
-
 const updateExpensesTable = async () => {
   try {
     const response = await fetch('/api/users/expenses');
     if (response.ok) {
       const data = await response.json();
-      const expenses = data.expenses;
-      const template = Handlebars.compile(
-        $('#expenses-template').html()
-      );
+      console.log(data);
 
-      $('#expenses-table tbody').html(template({ expenses }));
+      const templateSource = document.getElementById('expenses-template').innerHTML;
+      const template = Handlebars.compile(templateSource);
+      $('#expenses-table tbody').html(template(data));
+      
     } else {
       console.error('Failed to fetch expenses data.');
     }
@@ -46,6 +45,7 @@ const addExpenseFormHandler = async (event) => {
       document.querySelector('#name').value = '';
       document.querySelector('#type').value = '';
       document.querySelector('#amount').value = '';
+
 
       updateExpensesTable();
     } else {
