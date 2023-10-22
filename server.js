@@ -8,6 +8,8 @@ const sequelize = require('./config/connection');
 const Expense = require('./models/Expense');
 
 const app = express();
+
+
 const PORT = process.env.PORT || 3001;
 
 const sess = {
