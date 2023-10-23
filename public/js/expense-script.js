@@ -46,7 +46,6 @@ const addExpenseFormHandler = async (event) => {
       document.querySelector('#type').value = '';
       document.querySelector('#amount').value = '';
 
-
       updateExpensesTable();
     } else {
       const responseData = await response.json();
@@ -56,5 +55,25 @@ const addExpenseFormHandler = async (event) => {
     console.error('Error', error);
   }
 };
-  
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutButton = document.getElementById('logout-button');
+
+  logoutButton.addEventListener('click', async function () {
+    try {
+      const response = await fetch('/api/users/logout', {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        window.location.href = '/'; 
+        console.error('Failed to log out.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+});
+
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
+updateExpensesTable();
