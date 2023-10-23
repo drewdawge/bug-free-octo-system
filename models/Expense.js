@@ -15,11 +15,7 @@ Expense.init(
             type: DataTypes.DATE,
             allowNull: false,
           },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-          },
-        type: {
+        item: {
             type: DataTypes.STRING,
             allowNull: false,
           },
@@ -31,7 +27,7 @@ Expense.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'user',
+                model: 'username',
                 key: 'id',
             },
         },

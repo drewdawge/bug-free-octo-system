@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Expense } = require('../../models');
+const { Username, Expense } = require('../../models');
 
 // Authentication
 router.get('/user_auth', (req, res) => {
@@ -13,8 +13,8 @@ router.get('/user_auth', (req, res) => {
 // CREATE new user
 router.post('/new_user', async (req, res) => {
   try {
-    const dbUserData = await User.create({
-      email: req.body.email,
+    const dbUserData = await Username.create({
+      username: req.body.username,
       password: req.body.password,
     });
 
@@ -33,17 +33,17 @@ router.post('/new_user', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const userData = await User.findOne({ where: { email } });
+    const { username, password } = req.body;
+    const userData = await Username.findOne({ where: { username } });
 
     if (!userData) {
-      res.status(400).json({ message: 'Incorrect email or password' });
+      res.status(400).json({ message: 'Incorrect username or password' });
       return;
     }
     const validPassword = userData.checkPassword(password);
 
     if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect email or password' });
+      res.status(400).json({ message: 'Incorrect username or password' });
       return;
     }
 
@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
           req.session.loggedIn = true;
           req.session.userId = userData.id; 
 
-          res.status(200).json({ user: userData, message: 'You are now logged in' });
+          res.status(200).json({ username: userData, message: 'You are now logged in' });
         });
   } catch (err) {
       console.log(err);
@@ -88,15 +88,14 @@ router.get('/expenses', async (req, res) => {
 
 // Route to add expense
 router.post('/addExpense', async (req, res) => {
-  const { date, name, type, amount } = req.body;
-  if (!date || !name || !type || !amount) {
+  const { date, item, amount } = req.body;
+  if (!date || !item || !amount) {
     return res.status(400).json({ error: 'All fields are required' });
   }
     try {
     const newExpense = await Expense.create({
       date: date,
-      name: name,
-      type: type,
+      item: item,
       amount: amount,
       userid: req.session.userId,
     });

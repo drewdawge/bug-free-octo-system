@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 const Expense = require('./Expense');
 
-class User extends Model {
+class Username extends Model {
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
 
-User.init(
+Username.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,7 +17,7 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    email: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -37,13 +37,13 @@ User.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user',
+    modelName: 'username',
   }
 );
 
-User.hasMany(Expense, {
+Username.hasMany(Expense, {
   foreignKey: 'userid',
   onDelete: 'CASCADE',
 });
 
-module.exports = User;
+module.exports = Username;

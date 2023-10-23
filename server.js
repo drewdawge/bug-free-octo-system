@@ -48,7 +48,7 @@ app.get('/expenses', async (req, res) => {
     if (req.session.loggedIn) {
       const expenses = await Expense.findAll({ where: { userid: req.session.userId } });
 
-      res.render('expenses', {
+      res.render('partials/expenses', {
         expenses,  
         loggedIn: req.session.loggedIn,
       });

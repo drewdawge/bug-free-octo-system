@@ -1,34 +1,30 @@
-const updateExpensesTable = async () => {
-  try {
-    const response = await fetch('/api/users/expenses');
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
+// const updateExpensesTable = async () => {
+//   try {
+//     const response = await fetch('/api/users/expenses');
+//     if (response.ok) {
+//       const data = await response.json();
+//       console.log(data);
 
-      const templateSource = document.getElementById('expenses-template').innerHTML;
-      const template = Handlebars.compile(templateSource);
-      $('#expenses-table tbody').html(template(data));
+//     //  need to render data here and conenct to get expenses route in controller
       
-    } else {
-      console.error('Failed to fetch expenses data.');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+//     } else {
+//       console.error('Failed to fetch expenses data.');
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
 const addExpenseFormHandler = async (event) => {
   event.preventDefault();
 
   const date = document.querySelector('#date').value.trim();
-  const name = document.querySelector('#name').value.trim();
-  const type = document.querySelector('#type').value.trim();
+  const item = document.querySelector('#item').value.trim();
   const amount = document.querySelector('#amount').value.trim();
 
   const expenseData = {
     date,
-    name,
-    type,
+    item,
     amount,
   };
 
@@ -42,11 +38,10 @@ const addExpenseFormHandler = async (event) => {
     });
     if (response.ok) {
       document.querySelector('#date').value = '';
-      document.querySelector('#name').value = '';
-      document.querySelector('#type').value = '';
+      document.querySelector('#item').value = '';
       document.querySelector('#amount').value = '';
 
-      updateExpensesTable();
+      // updateExpensesTable();
     } else {
       const responseData = await response.json();
       console.error('Failed to add expense', responseData.error);
@@ -76,4 +71,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
-updateExpensesTable();
+// updateExpensesTable();
