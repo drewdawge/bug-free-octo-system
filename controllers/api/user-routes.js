@@ -59,16 +59,16 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// // Logout
-// router.post('/logout', (req, res) => {
-//   if (req.session.loggedIn) {
-//     req.session.destroy(() => {
-//       res.json({ message: 'Logout successful' });
-//     });
-//   } else {
-//     res.status(404).end();
-//   }
-// });
+// Logout
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+      req.session.userId = null;
+      res.json({ message: 'Logout successful' });
+      res.redirect('/');
+  } else {
+    res.status(404).end();
+  }
+});
 
 // Route to fetch expenses
 router.get('/expenses', async (req, res) => {
