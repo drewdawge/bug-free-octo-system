@@ -1,21 +1,21 @@
-const updateExpensesTable = async () => {
-  try {
-    const response = await fetch('/api/users/expenses');
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
+// const updateExpensesTable = async () => {
+//   try {
+//     const response = await fetch('/api/users/expenses');
+//     if (response.ok) {
+//       const data = await response.json();
+//       console.log(data);
 
-      const templateSource = document.getElementById('expenses-template').innerHTML;
-      const template = Handlebars.compile(templateSource);
-      $('#expenses-table tbody').html(template(data));
+//       const templateSource = document.getElementById('expenses-template').innerHTML;
+//       const template = Handlebars.compile(templateSource);
+//       $('#expenses-table tbody').html(template(data));
       
-    } else {
-      console.error('Failed to fetch expenses data.');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+//     } else {
+//       console.error('Failed to fetch expenses data.');
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
 const addExpenseFormHandler = async (event) => {
   event.preventDefault();
