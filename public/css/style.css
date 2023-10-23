@@ -1,4 +1,3 @@
-/* Global styles */
 body, h1, h2 {
     margin: 0;
     padding: 0;
@@ -12,7 +11,6 @@ body {
     padding: 20px;
 }
 
-/* Header styles */
 header {
     display: flex;
     justify-content: space-between;
@@ -44,7 +42,6 @@ header a {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Main styles */
 main {
     max-width: 1200px;
     min-height: 60vh;
@@ -56,7 +53,6 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Footer styles */
 footer {
     text-align: center;
     padding: 10px;
@@ -64,7 +60,6 @@ footer {
     color: #fff;
 }
 
-/* Login and Signup styles */
 .login-card {
     background-color: #fff;
     border: 1px solid #e1e1e1;
@@ -102,7 +97,6 @@ footer {
     cursor: pointer;
 }
 
-/* Expenses styles */
 .expenses-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -154,3 +148,52 @@ th {
     color: #333;
     margin-bottom: 20px;
 }
+
+#logout-button {
+    background-color: #8B4513; 
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#logout-button:hover {
+    background-color: #A0522D; 
+}
+
+@media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      align-items: center;
+      min-height: auto;
+      padding: 10px;
+    }
+    
+    header h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    
+    main {
+      padding: 10px;
+    }
+    
+    .login-card {
+      width: 100%;
+    }
+    
+    .expenses-container {
+      padding: 10px;
+    }
+    
+    .expense-form {
+      max-width: 100%;
+      padding: 10px;
+    }
+  }
