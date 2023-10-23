@@ -6,6 +6,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const Expense = require('./models/Expense');
+const financial = require('financial');
 
 const app = express();
 
