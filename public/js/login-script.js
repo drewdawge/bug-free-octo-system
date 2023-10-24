@@ -19,45 +19,18 @@ const loginFormHandler = async (event) => {
     }
   };
   
-const signupFormHandler = async (event) => {
-    event.preventDefault();
+document.getElementById('signup-btn').addEventListener('click', function () {
+  document.getElementById('signup-modal').style.display = 'block';
+});
 
-    const email = document.querySelector('#email-signup').value.trim();
-    const password = document.querySelector('#password-signup').value.trim();
+document.getElementsByClassName('close-btn')[0].addEventListener('click', function () {
+  document.getElementById('signup-modal').style.display = 'none';
+});
 
-    if (email && password) {
-        const response = await fetch('/api/users/new_user', {
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-            headers: { 'Content-Type': 'application/json' },
-        });
+window.addEventListener('click', function (event) {
+  if (event.target === document.getElementById('signup-modal')) {
+    document.getElementById('signup-modal').style.display = 'none';
+  }
+});
 
-        if (response.ok) {
-            document.location.replace('/');
-        } else {
-            alert('Failed to sign up.');
-        }
-    }
-};
-
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
-  
-document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-
-
-
-// const logout = async () => {
-//     const response = await fetch('/api/users/logout', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-  
-//     if (response.ok) {
-//       document.location.replace('/');
-//     } else {
-//       alert('Failed to log out.');
-//     }
-//   };
-  
-//   document.querySelector('#logout').addEventListener('click', logout);
   
