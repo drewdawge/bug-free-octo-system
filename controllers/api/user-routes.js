@@ -1,15 +1,6 @@
 const router = require('express').Router();
 const { Username, Expense } = require('../../models');
 
-// Authentication
-router.get('/user_auth', (req, res) => {
-  if (req.session.loggedIn) {
-    res.json({ loggedIn: true });
-  } else {
-    res.json({ loggedIn: false });
-  }
-});
-
 // CREATE new user
 router.post('/new_user', async (req, res) => {
   try {
@@ -21,9 +12,9 @@ router.post('/new_user', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.userId = dbUserData.id;
-
       res.status(200).json(dbUserData);
     });
+
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -40,8 +31,8 @@ router.post('/login', async (req, res) => {
       res.status(400).json({ message: 'Incorrect username or password' });
       return;
     }
-    const validPassword = userData.checkPassword(password);
 
+    const validPassword = userData.checkPassword(password);
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect username or password' });
       return;
@@ -53,6 +44,7 @@ router.post('/login', async (req, res) => {
 
           res.status(200).json({ username: userData, message: 'You are now logged in' });
         });
+
   } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -77,10 +69,12 @@ router.get('/expenses', async (req, res) => {
       const userId = req.session.userId;
       const expenses = await Expense.findAll({ where: { userId } });
       res.status(200).json({ expenses, loggedIn: true });
+
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
     }
+
   } else {
     res.status(401).json({ error: 'Unauthorized' });
   }
@@ -100,11 +94,29 @@ router.post('/addExpense', async (req, res) => {
       userid: req.session.userId,
     });
     
-    console.log('New expense added:', newExpense);
-    
+    console.log('New expense added:', newExpense);    
     res.status(201).json(newExpense); 
+
   } catch (err) {
     console.error('Error adding expense:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE expense
+router.delete('/expenses/:id', async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const expenseId = req.params.id;
+    const expense = await Expense.findOne({ where: { id: expenseId, userId } });
+
+    if (!expense) {
+      return res.status(404).json({ error: 'Expense not found' });
+    }
+
+    await expense.destroy();
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
