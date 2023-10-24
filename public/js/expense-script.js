@@ -1,36 +1,45 @@
-
 const updateExpensesTable = async () => {
   try {
     const response = await fetch('/api/users/expenses');
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-
-      const templateSource = document.getElementById('expenses-template').innerHTML;
-      const template = Handlebars.compile(templateSource);
-      $('#expenses-table tbody').html(template({expenses: data.expenses}));  
-      
+      renderExpenses(data.expenses);
     } else {
-      console.error('Failed to fetch expenses data.');
+      console.error('Unable to fetch expenses data.');
     }
   } catch (error) {
     console.error('Error:', error);
   }
 };
 
+const renderExpenses = (expenses) => {
+  const expensesTable = document.querySelector('.expenses-container table tbody');
+  expensesTable.innerHTML = '';
+  const rows = expenses.map((expense) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+        <td>${expense.date}</td>
+        <td>${expense.item}</td>
+        <td>$${expense.amount}</td>
+      `;
+  return row;
+  });
+  rows.forEach((row) => {
+  expensesTable.appendChild(row);
+  })
+};
 
 const addExpenseFormHandler = async (event) => {
   event.preventDefault();
 
   const date = document.querySelector('#date').value.trim();
-  const name = document.querySelector('#name').value.trim();
-  const type = document.querySelector('#type').value.trim();
+  const item = document.querySelector('#item').value.trim();
   const amount = document.querySelector('#amount').value.trim();
 
   const expenseData = {
     date,
-    name,
-    type,
+    item,
     amount,
   };
 
@@ -44,8 +53,7 @@ const addExpenseFormHandler = async (event) => {
     });
     if (response.ok) {
       document.querySelector('#date').value = '';
-      document.querySelector('#name').value = '';
-      document.querySelector('#type').value = '';
+      document.querySelector('#item').value = '';
       document.querySelector('#amount').value = '';
 
       updateExpensesTable();
@@ -68,14 +76,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       if (response.ok) {
-        window.location.href = '/'; 
+        window.location.href = '/';
         console.error('Failed to log out.');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   });
+
+ updateExpensesTable();
 });
 
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
-updateExpensesTable();
