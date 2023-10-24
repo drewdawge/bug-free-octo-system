@@ -113,3 +113,21 @@ document.querySelector('.expenses-container').addEventListener('click', (event) 
 });
 
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
+
+//sum of values
+
+const amounts = [
+  { amount: "water", price: 10},
+  { amount: "food", price: 20},
+  { amount: "tv", price: 100},
+  { amount: "dog", price: 30},
+]
+
+const totalPrice = amounts.reduce((total, item) =>{
+return total + item.price;
+}, 0);
+
+console.log("total: ", totalPrice);
+// const totalAmount = amount.reduce((total, item) => {
+//   return total + item.price;
+// }, 0);
