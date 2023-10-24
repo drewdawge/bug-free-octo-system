@@ -1,21 +1,34 @@
-// const updateExpensesTable = async () => {
-//   try {
-//     const response = await fetch('/api/users/expenses');
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log(data);
+const updateExpensesTable = async () => {
+  try {
+    const response = await fetch('/api/users/expenses');
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      renderExpenses(data.expenses);
+    } else {
+      console.error('Unable to fetch expenses data.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
-//       const templateSource = document.getElementById('expenses-template').innerHTML;
-//       const template = Handlebars.compile(templateSource);
-//       $('#expenses-table tbody').html(template(data));
-      
-//     } else {
-//       console.error('Failed to fetch expenses data.');
-//     }
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
+const renderExpenses = (expenses) => {
+  const expensesTable = document.querySelector('.expenses-container table tbody');
+  expensesTable.innerHTML = '';
+  const rows = expenses.map((expense) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+        <td>${expense.date}</td>
+        <td>${expense.item}</td>
+        <td>$${expense.amount}</td>
+      `;
+  return row;
+  });
+  rows.forEach((row) => {
+  expensesTable.appendChild(row);
+  })
+};
 
 const addExpenseFormHandler = async (event) => {
   event.preventDefault();
@@ -43,7 +56,7 @@ const addExpenseFormHandler = async (event) => {
       document.querySelector('#item').value = '';
       document.querySelector('#amount').value = '';
 
-      // updateExpensesTable();
+      updateExpensesTable();
     } else {
       const responseData = await response.json();
       console.error('Failed to add expense', responseData.error);
@@ -63,14 +76,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       if (response.ok) {
-        window.location.href = '/'; 
+        window.location.href = '/';
         console.error('Failed to log out.');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   });
+
+ updateExpensesTable();
 });
 
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
-// updateExpensesTable();

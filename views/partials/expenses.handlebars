@@ -9,11 +9,11 @@
       </tr>
     </thead>
     <tbody>
-      {{#each expenses}}
+      {{#each expenses as |expense|}}
         <tr>
-          <td>{{date}}</td>
-          <td>{{item}}</td>
-          <td>${{amount}}</td>
+          <td>{{expense.date}}</td>
+          <td>{{expense.item}}</td>
+          <td>${{expense.amount}}</td>
         </tr>
       {{/each}}
     </tbody>
