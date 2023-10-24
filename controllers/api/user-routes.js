@@ -1,15 +1,6 @@
 const router = require('express').Router();
 const { Username, Expense } = require('../../models');
 
-// Authentication
-router.get('/user_auth', (req, res) => {
-  if (req.session.loggedIn) {
-    res.json({ loggedIn: true });
-  } else {
-    res.json({ loggedIn: false });
-  }
-});
-
 // CREATE new user
 router.post('/new_user', async (req, res) => {
   try {
@@ -105,6 +96,24 @@ router.post('/addExpense', async (req, res) => {
     res.status(201).json(newExpense); 
   } catch (err) {
     console.error('Error adding expense:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE expense
+router.delete('/expenses/:id', async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const expenseId = req.params.id;
+    const expense = await Expense.findOne({ where: { id: expenseId, userId } });
+
+    if (!expense) {
+      return res.status(404).json({ error: 'Expense not found' });
+    }
+
+    await expense.destroy();
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

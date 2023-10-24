@@ -6,16 +6,11 @@
         <th>Date</th>
         <th>Item</th>
         <th>Amount</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      {{#each expenses as |expense|}}
-        <tr>
-          <td>{{expense.date}}</td>
-          <td>{{expense.item}}</td>
-          <td>${{expense.amount}}</td>
-        </tr>
-      {{/each}}
+      {{!-- renderExpenses dynamically builds the table here --}}
     </tbody>
   </table>
 </div>
@@ -44,36 +39,3 @@
 
 
 <script src="/js/expense-script.js"></script>
-
-
-
-
-
-
-
-{{!-- <section class="expenses">
-    <h3>Welcome {{user.username}}!</h3>
-    <h4>Your Stored Information</h4>
-    <div>
-    <ul>
-        {{#each records}}
-        <li>
-            <strong>Name:</strong> {{ this.name }}
-            <strong>Email:</strong> {{ this.email }}
-        </li>
-        {{/each}}
-    </ul>
-    </div>
-
-
-    <div>
-  <h4>Your transactions:</h4>
-  <ul>
-    {{#each transactions}}
-      <li>{{description}} - {{amount}}</li>
-    {{else}}
-      <li>No transactions found.</li>
-    {{/each}}
-  </ul>
-</div>
-</section> --}}

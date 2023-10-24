@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   } else {
-    // User is not logged in, render content for non-logged-in users
     res.render('partials/login');
   }
 });

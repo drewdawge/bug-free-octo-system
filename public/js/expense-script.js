@@ -19,9 +19,10 @@ const renderExpenses = (expenses) => {
   const rows = expenses.map((expense) => {
   const row = document.createElement('tr');
   row.innerHTML = `
-        <td>${expense.date}</td>
+        <td>${expense.date.split("T")[0]}</td>
         <td>${expense.item}</td>
-        <td>$${expense.amount}</td>
+        <td>$${expense.amount}.00</td>
+        <td><button class="delete-button" data-expense-id="${expense.id}">X</button></td>
       `;
   return row;
   });
@@ -85,6 +86,30 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
  updateExpensesTable();
+});
+
+const deleteExpense = async (expenseId) => {
+  try {
+    const response = await fetch(`/api/users/expenses/${expenseId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      updateExpensesTable();     
+    } else {
+      console.error('Failed to delete expense');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+document.querySelector('.expenses-container').addEventListener('click', (event) => {
+  if (event.target.classList.contains('delete-button')) {
+    const expenseId = event.target.dataset.expenseId;
+    deleteExpense(expenseId);
+    window.location.reload();
+  }
 });
 
 document.querySelector('.add-expense').addEventListener('submit', addExpenseFormHandler);
